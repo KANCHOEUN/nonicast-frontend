@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.4.15",
+    "@heroicons/react": "^1.0.4",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -11,11 +12,16 @@
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@types/react-helmet-async": "^1.0.3",
+    "@types/react-router-dom": "^5.3.0",
     "autoprefixer": "^10.3.6",
     "graphql": "^15.6.0",
     "postcss": "^8.3.8",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-helmet-async": "^1.1.2",
+    "react-hook-form": "^7.16.1",
+    "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
     "tailwindcss": "^2.2.16",
     "typescript": "^4.1.2",
@@ -23,7 +29,8 @@
   },
   "scripts": {
     "tailwind:build": "tailwind build ./src/styles/tailwind.css -o ./src/styles/styles.css",
-    "start": "npm run tailwind:build & react-scripts start",
+    "start": "npm run apollo:codegen & npm run tailwind:build & react-scripts start",
+    "apollo:codegen": "apollo client:codegen src/__generated__ --target=typescript --outputFlat",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -45,5 +52,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "apollo": "^2.33.6"
   }
 }
