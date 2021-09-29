@@ -1,9 +1,10 @@
 import { gql, useMutation } from "@apollo/client";
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { authTokenVar, isLoggedInVar } from "../apollo";
-import { Button } from "../components/Button";
+import { SubmitButton } from "../components/SubmitButton";
 import { FormError } from "../components/FormError";
 import { LOCALSTORAGE_TOKEN } from "../constants";
 import {
@@ -68,6 +69,9 @@ export const Login: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center mt-7 md:mt-24">
+      <Helmet>
+        <title>Login | Noicast</title>
+      </Helmet>
       <div className="w-full max-w-screen-sm flex flex-col items-center px-6 md:shadow md:px-20 md:py-16 md:rounded-xl">
         <h1 className="text-3xl font-bold mb-4 self-start">Login</h1>
         <h4 className="text-xl mb-7 self-start">Welcome Back :)</h4>
@@ -116,7 +120,7 @@ export const Login: React.FC = () => {
             <FormError errorMessage={"Password must be more than 8 chars"} />
           )}
           {/* Login Button */}
-          <Button isValid={isValid} loading={loading} text="Login" />
+          <SubmitButton isValid={isValid} loading={loading} text="Login" />
           {loginResults?.login.error && (
             <FormError errorMessage={loginResults.login.error} />
           )}{" "}

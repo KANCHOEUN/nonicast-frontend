@@ -1,16 +1,21 @@
 import React from "react";
-// import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Header } from "../components/Header";
+import { Home } from "../pages/client/Home";
+import { NotFound } from "../pages/NotFound";
 
 export const LoggedInRouter = () => {
   return (
-    // <BrowserRouter>
-    //   <Switch>
-    //     <Route exact path="/">
-    //       {/* podcast list */}
-    //     </Route>
-    //     <Route>{/* 404 Not Found */}</Route>
-    //   </Switch>
-    // </BrowserRouter>
-    <div>Success to Login</div>
+    <BrowserRouter>
+      <Header />
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route>
+          <NotFound />
+        </Route>
+      </Switch>
+    </BrowserRouter>
   );
 };

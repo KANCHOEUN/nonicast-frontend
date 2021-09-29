@@ -5,11 +5,12 @@ import { Link, useHistory } from "react-router-dom";
 import { MicrophoneIcon, PhoneIcon } from "@heroicons/react/solid";
 import { FormError } from "../components/FormError";
 import { UserRole } from "../__generated__/globalTypes";
-import { Button } from "../components/Button";
+import { SubmitButton } from "../components/SubmitButton";
 import {
   CreateAccountMutation,
   CreateAccountMutationVariables,
 } from "../__generated__/CreateAccountMutation";
+import { Helmet } from "react-helmet-async";
 
 const CREATE_ACCOUNT_MUTATION = gql`
   mutation CreateAccountMutation($createAccountInput: CreateAccountInput!) {
@@ -54,6 +55,9 @@ export const SignUp: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center mt-7 md:mt-24">
+      <Helmet>
+        <title>Sign Up | Noicast</title>
+      </Helmet>
       <div className="w-full max-w-screen-sm flex flex-col items-center px-6 md:shadow md:px-20 md:py-16 md:rounded-xl">
         <h1 className="text-3xl font-bold mb-4 self-start">Sign Up</h1>
         <h4 className="text-xl mb-7 self-start">Welcome :)</h4>
@@ -146,7 +150,7 @@ export const SignUp: React.FC = () => {
             </label>
           </div>
 
-          <Button isValid={isValid} loading={loading} text="Sign Up" />
+          <SubmitButton isValid={isValid} loading={loading} text="Sign Up" />
           {createAccountResult?.createAccount.error && (
             <FormError errorMessage={createAccountResult.createAccount.error} />
           )}
