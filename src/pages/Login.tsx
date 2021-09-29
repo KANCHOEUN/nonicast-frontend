@@ -2,8 +2,10 @@ import { gql, useMutation } from "@apollo/client";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { authTokenVar, isLoggedInVar } from "../apollo";
 import { Button } from "../components/Button";
 import { FormError } from "../components/FormError";
+import { LOCALSTORAGE_TOKEN } from "../constants";
 import {
   LoginMutation,
   LoginMutationVariables,
@@ -37,7 +39,9 @@ export const Login: React.FC = () => {
   const onCompleted = (data: LoginMutation) => {
     const { ok, token } = data.login;
     if (ok && token) {
-      console.log(token);
+      localStorage.setItem(LOCALSTORAGE_TOKEN, token);
+      authTokenVar(token);
+      isLoggedInVar(true);
     }
   };
 
