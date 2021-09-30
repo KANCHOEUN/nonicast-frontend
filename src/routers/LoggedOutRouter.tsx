@@ -4,7 +4,6 @@ import { Header } from "../components/Header";
 import { AccessDenied } from "../pages/AccessDenied";
 import { Home } from "../pages/client/Home";
 import { Login } from "../pages/Login";
-import { NotFound } from "../pages/NotFound";
 import { SignUp } from "../pages/SignUp";
 
 export const LoggedOutRouter = () => {
@@ -23,9 +22,6 @@ export const LoggedOutRouter = () => {
         </Route>
         <Route path="/">
           <AccessDenied />
-        </Route>
-        <Route>
-          <NotFound />
         </Route>
       </Switch>
     </BrowserRouter>
