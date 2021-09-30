@@ -46,7 +46,7 @@ export const Home: React.FC = () => {
 
   return (
     <>
-      <div className="block relative w-full h-60 bg-white mt-3 mb-3 max-w-screen-xl mx-auto border border-l-0 border-r-0 sm:h-80">
+      <div className="block relative w-full h-60 bg-white mb-3 max-w-screen-xl mx-auto border border-l-0 border-r-0 border-t-0 sm:h-80">
         <Helmet>
           <title>Home | Nonicast</title>
         </Helmet>
@@ -75,17 +75,15 @@ export const Home: React.FC = () => {
       <div className="mt-7 max-w-screen-xl mx-auto">
         {data &&
           data.getPodcasts?.podcasts?.map(
-            ({ id, title, category, rating }, idx) => {
-              return (
-                <PodcastItem
-                  key={"podcast-item" + idx}
-                  id={id}
-                  title={title}
-                  category={category}
-                  rating={rating ? rating : 0}
-                />
-              );
-            }
+            ({ id, title, category, rating }, idx) => (
+              <PodcastItem
+                key={idx}
+                id={id}
+                title={title}
+                category={category}
+                rating={rating ? rating : 0}
+              />
+            )
           )}
       </div>
     </>
