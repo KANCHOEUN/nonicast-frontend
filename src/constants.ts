@@ -12,3 +12,5 @@ export const accessDeniedImg =
 
 export const notFoundImg =
   "https://doodleipsum.com/700/hand-drawn?i=ffb35a759db9bc3a62cda110c460c889";
+
+export const defaultCoverImg = "https://doodleipsum.com/200/abstract";

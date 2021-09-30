@@ -33,6 +33,13 @@ export interface CreateAccountInput {
   role: UserRole;
 }
 
+export interface CreatePodcastInput {
+  title: string;
+  coverImg?: string | null;
+  category: PodcastCategory;
+  description: string;
+}
+
 export interface LoginInput {
   email: string;
   password: string;

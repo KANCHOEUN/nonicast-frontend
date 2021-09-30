@@ -31,7 +31,7 @@ export const SignUp: React.FC = () => {
   } = useForm({ mode: "onChange" });
   const history = useHistory();
   const onCompleted = (data: CreateAccountMutation) => {
-    if (data.createAccount.ok) history.push("/");
+    if (data.createAccount.ok) history.push("/login");
   };
   const [createAccountMutation, { data: createAccountResult, loading }] =
     useMutation<CreateAccountMutation, CreateAccountMutationVariables>(
@@ -157,7 +157,7 @@ export const SignUp: React.FC = () => {
         </form>
         <div className="mt-4">
           {"Already use Podcast? "}
-          <Link to="/" className="text-green-400 hover:underline">
+          <Link to="/login" className="text-green-400 hover:underline">
             Log in
           </Link>
         </div>

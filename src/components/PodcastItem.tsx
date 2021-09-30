@@ -19,15 +19,17 @@ export const PodcastItem: React.FC<IPodcastItemProps> = ({
   const stars = [];
 
   for (let i = 0; i < Math.ceil(rating); i++) {
-    stars.push(<StarIcon className="w-5 text-yellow-400" />);
+    stars.push(<StarIcon key={`y-${i}`} className="w-5 text-yellow-400" />);
   }
   for (let i = 0; i < 5 - Math.ceil(rating); i++) {
-    stars.push(<BlankStarIcon className="w-5 text-yellow-400" />);
+    stars.push(
+      <BlankStarIcon key={`b-${i}`} className="w-5 text-yellow-400" />
+    );
   }
 
   return (
     <div className="my-6 mx-10 bg-white rounded-xl shadow-md overflow-hidden">
-      <Link key={id} to={`/${id}`}>
+      <Link to={`/${id}`}>
         <div className="sm:flex">
           {/* Img */}
           <div className="flex-shrink-0">
