@@ -2,7 +2,7 @@ import { gql, useMutation } from "@apollo/client";
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { authTokenVar, isLoggedInVar } from "../apollo";
 import { SubmitButton } from "../components/SubmitButton";
 import { FormError } from "../components/FormError";
@@ -36,12 +36,14 @@ export const Login: React.FC = () => {
   } = useForm<ILoginForm>({
     mode: "onChange",
   });
+  const history = useHistory();
 
   const onCompleted = (data: LoginMutation) => {
     const { ok, token } = data.login;
     if (ok && token) {
       localStorage.setItem(LOCALSTORAGE_TOKEN, token);
       authTokenVar(token);
+      history.push("/");
       isLoggedInVar(true);
     }
   };
