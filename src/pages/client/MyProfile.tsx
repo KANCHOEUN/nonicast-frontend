@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useHistory } from "react-router-dom";
-import { authTokenVar, isLoggedInVar } from "../../apollo";
+import { authTokenVar, client, isLoggedInVar } from "../../apollo";
 import { SubmitButton } from "../../components/SubmitButton";
 import { LOCALSTORAGE_TOKEN } from "../../constants";
 import { useMe } from "../../hooks/useMe";
+import { UserRole } from "../../__generated__/globalTypes";
 
 export const MyProfile = () => {
   const [tab, setTab] = useState(true);
@@ -20,6 +21,7 @@ export const MyProfile = () => {
     isLoggedInVar(false);
     authTokenVar("");
     history.push("/");
+    client.clearStore();
   };
 
   if (!data || loading || error) {
@@ -63,32 +65,39 @@ export const MyProfile = () => {
           />
         </div>
       </div>
-      {/* Tab: My Subscriptions / My Reviews */}
-      <div className="flex w-full justify-start mt-10 max-w-screen-xl px-6 md:px-8 space-x-6">
-        <button
-          onClick={() => setTab(true)}
-          className={`w-36 ${
-            tab
-              ? "font-semibold"
-              : "text-gray-500 hover:text-green-600 hover:text-opacity-60"
-          }`}
-        >
-          My Subscriptions
-        </button>
-        <span className="mx-4 text-green-600 text-opacity-70 font-bold">|</span>
-        <button
-          onClick={() => setTab(false)}
-          className={`w-24 ${
-            !tab
-              ? "font-semibold"
-              : "text-gray-500 hover:text-green-600 hover:text-opacity-60"
-          }`}
-        >
-          My Reviews
-        </button>
-      </div>
-      {tab && <div>{/* TODO: My subscriptions */}</div>}
-      {!tab && <div>{/* TODO: My reviews */}</div>}
+      {data?.me.role === UserRole.Listener && (
+        <>
+          {" "}
+          {/* Tab: My Subscriptions / My Reviews */}
+          <div className="flex w-full justify-start mt-10 max-w-screen-xl px-6 md:px-8 space-x-6">
+            <button
+              onClick={() => setTab(true)}
+              className={`w-36 ${
+                tab
+                  ? "font-semibold"
+                  : "text-gray-500 hover:text-green-600 hover:text-opacity-60"
+              }`}
+            >
+              My Subscriptions
+            </button>
+            <span className="mx-4 text-green-600 text-opacity-70 font-bold">
+              |
+            </span>
+            <button
+              onClick={() => setTab(false)}
+              className={`w-24 ${
+                !tab
+                  ? "font-semibold"
+                  : "text-gray-500 hover:text-green-600 hover:text-opacity-60"
+              }`}
+            >
+              My Reviews
+            </button>
+          </div>
+          {tab && <div>{/* TODO: My subscriptions */}</div>}
+          {!tab && <div>{/* TODO: My reviews */}</div>}
+        </>
+      )}
     </div>
   );
 };
