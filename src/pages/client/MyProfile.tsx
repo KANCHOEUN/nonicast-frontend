@@ -1,17 +1,59 @@
+import { useQuery } from "@apollo/client";
+import gql from "graphql-tag";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { authTokenVar, client, isLoggedInVar } from "../../apollo";
 import { SubmitButton } from "../../components/SubmitButton";
 import { LOCALSTORAGE_TOKEN } from "../../constants";
-import { useMe } from "../../hooks/useMe";
+import {
+  GetProfileQuery,
+  GetProfileQueryVariables,
+} from "../../__generated__/GetProfileQuery";
 import { UserRole } from "../../__generated__/globalTypes";
+
+const GET_PROFILE_QUERY = gql`
+  query GetProfileQuery($userId: Float!) {
+    getProfile(userId: $userId) {
+      ok
+      error
+      user {
+        id
+        email
+        role
+        subscriptions {
+          id
+          title
+          category
+        }
+        reviews {
+          createdAt
+          content
+          podcast {
+            id
+            title
+          }
+        }
+      }
+    }
+  }
+`;
+
+interface IMyProfileParams {
+  id: string;
+}
 
 export const MyProfile = () => {
   const [tab, setTab] = useState(true);
-  // TODO: Get Subscriptions
-  // TODO: Get Reviews
-  const { data, loading, error } = useMe();
+  const params = useParams<IMyProfileParams>();
+  const { data, loading, error } = useQuery<
+    GetProfileQuery,
+    GetProfileQueryVariables
+  >(GET_PROFILE_QUERY, {
+    variables: {
+      userId: +params.id,
+    },
+  });
   const history = useHistory();
 
   const profileImg = "https://doodleipsum.com/200/avatar?shape=circle";
@@ -44,8 +86,10 @@ export const MyProfile = () => {
           />
           {/* Profile Info */}
           <div className="flex flex-col items-center space-y-1">
-            <h2 className="text-xl font-medium">{data?.me.role}</h2>
-            <h5>{data?.me.email}</h5>
+            <h2 className="text-xl font-medium">
+              {data?.getProfile.user?.role}
+            </h2>
+            <h5>{data?.getProfile.user?.email}</h5>
           </div>
         </div>
         {/* Edit profile / Log out */}
@@ -65,7 +109,7 @@ export const MyProfile = () => {
           />
         </div>
       </div>
-      {data?.me.role === UserRole.Listener && (
+      {data?.getProfile.user?.role === UserRole.Listener && (
         <>
           {" "}
           {/* Tab: My Subscriptions / My Reviews */}
@@ -94,7 +138,7 @@ export const MyProfile = () => {
               My Reviews
             </button>
           </div>
-          {tab && <div>{/* TODO: My subscriptions */}</div>}
+          {tab && <div>{/* My subscriptions */}</div>}
           {!tab && <div>{/* TODO: My reviews */}</div>}
         </>
       )}

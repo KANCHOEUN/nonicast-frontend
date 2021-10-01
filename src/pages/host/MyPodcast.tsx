@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/Button";
+import { EpisodeItem } from "../../components/EpisodeItem";
 import { defaultCoverImg, notFoundImg } from "../../constants";
 import { GetPodcastQuery } from "../../__generated__/GetPodcastQuery";
 
@@ -164,7 +165,7 @@ export const MyPodcast: React.FC = () => {
           {/* Episodes */}
           <div className="flex justify-between">
             <h1 className="text-xl font-semibold self-center">Episodes</h1>
-            <Link to="/add-episode">
+            <Link to={`${data?.getPodcast.podcast?.id}/episode/add`}>
               <Button text="Add" />
             </Link>
           </div>
@@ -185,6 +186,23 @@ export const MyPodcast: React.FC = () => {
             </>
           )}
           {/* Episode List */}
+          {data?.getPodcast.podcast?.episodes && (
+            <div className="w-full mt-4">
+              {data?.getPodcast.podcast?.episodes.map(
+                ({ id, title, fileUrl, createdAt, updatedAt }, idx) => (
+                  <EpisodeItem
+                    key={idx}
+                    podcastId={+params.id}
+                    episodeId={id}
+                    title={title}
+                    fileUrl={fileUrl}
+                    createdAt={createdAt}
+                    updatedAt={updatedAt}
+                  />
+                )
+              )}
+            </div>
+          )}
         </div>
       </div>
     </>

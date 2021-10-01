@@ -34,24 +34,27 @@ export const Header: React.FC = () => {
             <h1 className="text-2xl font-extrabold">Nonicast</h1>
           </Link>
         </span>
-        <div className="flex w-7/12 sm:w-5/12">
+        <div className="flex w-7/12 sm:w-5/12 justify-end">
           {/* Search Input */}
-          <div className="relative flex group w-full mr-4 border border-gray-300 outline-none transition-all duration-700 rounded-lg group-focus:border-gray-600 overflow-hidden">
-            <input
-              type="text"
-              onKeyDown={handleKeyDown}
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              className="w-11/12 pl-3 outline-none"
-            />
-            <SearchIcon
-              onClick={handleClick}
-              className="w-5 absolute top-1.5 right-2.5 text-gray-400 group-focus:text-black cursor-pointer"
-            />
-          </div>
+          {(pathname === "/" || pathname.includes("/search")) && (
+            <div className="relative flex group w-full mr-4 border border-gray-300 outline-none transition-all duration-700 rounded-lg group-focus:border-gray-600 overflow-hidden">
+              <input
+                type="text"
+                onKeyDown={handleKeyDown}
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="w-11/12 pl-3 outline-none"
+              />
+              <SearchIcon
+                onClick={handleClick}
+                className="w-5 absolute top-1.5 right-2.5 text-gray-400 group-focus:text-black cursor-pointer"
+              />
+            </div>
+          )}
+
           {/* SignIn Button */}
           {!isLoggedIn && pathname !== "/login" && pathname !== "/sign-up" && (
-            <Link to="/login">
+            <Link to="/login" className="min-w-max">
               <Button text="Sign in" />
             </Link>
           )}
