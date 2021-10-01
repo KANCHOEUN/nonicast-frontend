@@ -7,6 +7,7 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/Button";
 import { EpisodeItem } from "../../components/EpisodeItem";
+import { ReviewItem } from "../../components/ReviewItem";
 import { defaultCoverImg, notFoundImg } from "../../constants";
 import { GetPodcastQuery } from "../../__generated__/GetPodcastQuery";
 import { UserRole } from "../../__generated__/globalTypes";
@@ -141,7 +142,7 @@ export const MyPodcast: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="px-4 py-3">
+          <div className="px-4 py-3 w-full">
             {/* Tab: Subscribers / Reviews */}
             <div className="flex w-full justify-start max-w-screen-xl space-x-6">
               <button
@@ -167,6 +168,23 @@ export const MyPodcast: React.FC = () => {
               >
                 Reviews
               </button>
+            </div>
+            <div className="mt-2">
+              {/* TODO: Subscribers */}
+              {/* Reviews */}
+              {!tab &&
+                data?.getPodcast.podcast?.reviews &&
+                data.getPodcast.podcast.reviews.map(
+                  ({ creator: { email }, createdAt, content }, idx) => (
+                    <ReviewItem
+                      key={idx}
+                      creator={email}
+                      createdAt={createdAt}
+                      content={content}
+                      clickable={false}
+                    />
+                  )
+                )}
             </div>
           </div>
         </div>

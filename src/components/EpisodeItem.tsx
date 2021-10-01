@@ -43,7 +43,7 @@ export const EpisodeItem: React.FC<IEpisodeItemProps> = ({
         <div className="flex space-x-3">
           <PlayIcon
             onClick={onClickPlayBtn}
-            className="w-6 rounded-full hover:bg-gray-200 hover:bg-opacity-60"
+            className="cursor-pointer w-6 rounded-full hover:bg-gray-200 hover:bg-opacity-60"
           />
           {role === UserRole.Host && (
             <>
@@ -53,7 +53,7 @@ export const EpisodeItem: React.FC<IEpisodeItemProps> = ({
               </Link>
               <TrashIcon
                 onClick={deleteHandler}
-                className="w-6 rounded-full hover:bg-gray-200 hover:bg-opacity-60"
+                className="w-6 rounded-full cursor-pointer hover:bg-gray-200 hover:bg-opacity-60"
               />
             </>
           )}

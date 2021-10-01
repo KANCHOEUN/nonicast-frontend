@@ -112,7 +112,7 @@ export const AddEpisode: React.FC = () => {
             {...register("file", { required: true })}
             type="file"
             accept="audio/*"
-            className="mt-4"
+            className="w-full mt-4 truncate"
           />
           {errors.file?.message && (
             <FormError errorMessage={errors.file.message} />
