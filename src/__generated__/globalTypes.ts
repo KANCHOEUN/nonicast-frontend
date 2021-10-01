@@ -55,6 +55,17 @@ export interface SearchPodcastInput {
   query: string;
 }
 
+export interface UpdateEpisodeInput {
+  podcastId: number;
+  episodeId: number;
+  payload: UpdateEpisodePayload;
+}
+
+export interface UpdateEpisodePayload {
+  title?: string | null;
+  fileUrl?: string | null;
+}
+
 export interface UpdatePodcastInput {
   id: number;
   payload: UpdatePodcastPayload;
@@ -66,6 +77,11 @@ export interface UpdatePodcastPayload {
   category?: PodcastCategory | null;
   description?: string | null;
   rating?: number | null;
+}
+
+export interface UpdateProfileInput {
+  email?: string | null;
+  password?: string | null;
 }
 
 //==============================================================

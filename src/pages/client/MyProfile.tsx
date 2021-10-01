@@ -94,7 +94,10 @@ export const MyProfile = () => {
         </div>
         {/* Edit profile / Log out */}
         <div className="w-6/12 flex space-x-4 mx-auto">
-          <Link to="/edit-profile" className="w-full">
+          <Link
+            to={`/user/${data?.getProfile.user?.id}/edit`}
+            className="w-full"
+          >
             <SubmitButton
               isValid={true}
               loading={loading}

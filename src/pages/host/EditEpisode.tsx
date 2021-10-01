@@ -8,7 +8,7 @@ import { SubmitButton } from "../../components/SubmitButton";
 import { IMyPodcastParams } from "./MyPodcast";
 
 const EDIT_EPISODE_MUTATION = gql`
-  mutation EditEpisodeMutation($input: UpdaetEpisodeInput!) {
+  mutation EditEpisodeMutation($input: UpdateEpisodeInput!) {
     updateEpisode(input: $input) {
       ok
       error

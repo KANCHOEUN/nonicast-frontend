@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Header } from "../components/Header";
 import { useMe } from "../hooks/useMe";
+import { EditProfile } from "../pages/client/EditProfile";
 import { Home } from "../pages/client/Home";
 import { MyProfile } from "../pages/client/MyProfile";
 import { Search } from "../pages/client/Search";
@@ -57,6 +58,10 @@ const commonRoutes = [
   {
     path: "/user/:id",
     component: <MyProfile />,
+  },
+  {
+    path: "/user/:id/edit",
+    component: <EditProfile />,
   },
   {
     path: "/search",
