@@ -4,8 +4,10 @@ import { Header } from "../components/Header";
 import { useMe } from "../hooks/useMe";
 import { Home } from "../pages/client/Home";
 import { MyProfile } from "../pages/client/MyProfile";
+import { AddEpisode } from "../pages/host/AddEpisode";
 import { AddPodcast } from "../pages/host/AddPodcast";
 import { Dashboard } from "../pages/host/Dashboard";
+import { EditPodcast } from "../pages/host/EditPodcast";
 import { MyPodcast } from "../pages/host/MyPodcast";
 import { NotFound } from "../pages/NotFound";
 import { UserRole } from "../__generated__/globalTypes";
@@ -23,12 +25,20 @@ const hostRoutes = [
     component: <Dashboard />,
   },
   {
-    path: "/add-podcast",
+    path: "/podcast/add",
     component: <AddPodcast />,
   },
   {
     path: "/podcast/:id",
     component: <MyPodcast />,
+  },
+  {
+    path: "/podcast/:id/edit",
+    component: <EditPodcast />,
+  },
+  {
+    path: "/podcast/:id/episode/add",
+    component: <AddEpisode />,
   },
 ];
 
@@ -49,8 +59,6 @@ export const LoggedInRouter = () => {
       </div>
     );
   }
-
-  console.log(data.me.role);
 
   return (
     <BrowserRouter>

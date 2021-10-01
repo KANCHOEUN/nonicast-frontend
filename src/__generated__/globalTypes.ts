@@ -35,7 +35,7 @@ export interface CreateAccountInput {
 
 export interface CreatePodcastInput {
   title: string;
-  coverImg?: string | null;
+  coverImg: string;
   category: PodcastCategory;
   description: string;
 }
@@ -43,6 +43,19 @@ export interface CreatePodcastInput {
 export interface LoginInput {
   email: string;
   password: string;
+}
+
+export interface UpdatePodcastInput {
+  id: number;
+  payload: UpdatePodcastPayload;
+}
+
+export interface UpdatePodcastPayload {
+  title?: string | null;
+  coverImg?: string | null;
+  category?: PodcastCategory | null;
+  description?: string | null;
+  rating?: number | null;
 }
 
 //==============================================================

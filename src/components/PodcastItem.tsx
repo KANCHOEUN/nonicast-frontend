@@ -1,5 +1,5 @@
 import { StarIcon as BlankStarIcon } from "@heroicons/react/outline";
-import { PhotographIcon, StarIcon } from "@heroicons/react/solid";
+import { StarIcon } from "@heroicons/react/solid";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -8,6 +8,7 @@ interface IPodcastItemProps {
   title: string;
   category: string;
   rating: number;
+  coverImg: string;
 }
 
 export const PodcastItem: React.FC<IPodcastItemProps> = ({
@@ -15,6 +16,7 @@ export const PodcastItem: React.FC<IPodcastItemProps> = ({
   title,
   category,
   rating,
+  coverImg,
 }) => {
   const stars = [];
 
@@ -33,10 +35,11 @@ export const PodcastItem: React.FC<IPodcastItemProps> = ({
         <div className="sm:flex">
           {/* Img */}
           <div className="flex-shrink-0">
-            <div className="flex justify-center items-center h-40 w-full sm:w-48 bg-green-400">
-              <PhotographIcon className="w-10 text-white" />
-              <span className="text-white text-xl font-bold">+</span>
-            </div>
+            <img
+              src={coverImg}
+              alt="podcast-item-cover-img"
+              className="h-40 w-full sm:w-48"
+            />
           </div>
           {/* Contents */}
           <div className="p-6 w-full">

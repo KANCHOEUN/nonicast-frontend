@@ -29,7 +29,7 @@ export interface GetPodcastQuery_getPodcast_podcast {
   createdAt: any;
   updatedAt: any;
   title: string;
-  coverImg: string | null;
+  coverImg: string;
   category: PodcastCategory;
   description: string;
   rating: number | null;

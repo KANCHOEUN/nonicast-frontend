@@ -52,7 +52,7 @@ export const Dashboard = () => {
         {/* TODO: Create New Podcast Button */}
         <div className="w-full flex justify-between mb-3">
           <h1 className="font-normal self-center text-black">Podcasts</h1>
-          <Link to="/add-podcast">
+          <Link to="/podcast/add">
             <Button text="Add" />
           </Link>
         </div>
