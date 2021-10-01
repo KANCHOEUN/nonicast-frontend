@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet-async";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { Button } from "../../components/Button";
 import { EpisodeItem } from "../../components/EpisodeItem";
+import { ReviewItem } from "../../components/ReviewItem";
 import { SubmitButton } from "../../components/SubmitButton";
 import { defaultCoverImg, notFoundImg } from "../../constants";
 import { useMe } from "../../hooks/useMe";
@@ -145,6 +146,17 @@ export const Podcast: React.FC = () => {
                 />
               </div>
             </div>
+            {data?.getPodcast.podcast?.reviews &&
+              data.getPodcast.podcast.reviews.map(
+                ({ creator: { email }, createdAt, content }, idx) => (
+                  <ReviewItem
+                    key={idx}
+                    creator={email}
+                    createdAt={createdAt}
+                    content={content}
+                  />
+                )
+              )}
           </div>
         </div>
         <div className="w-full mt-5 pl-6 pr-4 py-4">
