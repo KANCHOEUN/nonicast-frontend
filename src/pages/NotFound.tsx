@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { notFoundImg } from "../constants";
 
 export const NotFound = () => (
-  <div className="h-screen flex flex-col items-center mt-20 sm:mt-32">
+  <div className="h-full flex flex-col items-center mt-20 sm:mt-32">
     <Helmet>
       <title>Not Found | Nonicast</title>
     </Helmet>

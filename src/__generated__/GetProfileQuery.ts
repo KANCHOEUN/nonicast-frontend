@@ -14,6 +14,7 @@ export interface GetProfileQuery_getProfile_user_podcasts {
   id: number;
   title: string;
   category: PodcastCategory;
+  coverImg: string;
   updatedAt: any;
 }
 
@@ -32,4 +33,8 @@ export interface GetProfileQuery_getProfile {
 
 export interface GetProfileQuery {
   getProfile: GetProfileQuery_getProfile;
+}
+
+export interface GetProfileQueryVariables {
+  userId: number;
 }

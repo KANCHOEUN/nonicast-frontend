@@ -21,6 +21,7 @@ const GET_PODCASTS_QUERY = gql`
         title
         category
         rating
+        coverImg
       }
     }
   }
@@ -75,12 +76,13 @@ export const Home: React.FC = () => {
       <div className="mt-7 max-w-screen-xl mx-auto">
         {data &&
           data.getPodcasts?.podcasts?.map(
-            ({ id, title, category, rating }, idx) => (
+            ({ id, title, category, coverImg, rating }, idx) => (
               <PodcastItem
                 key={idx}
                 id={id}
                 title={title}
                 category={category}
+                coverImg={coverImg}
                 rating={rating ? rating : 0}
               />
             )

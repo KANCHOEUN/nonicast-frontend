@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { accessDeniedImg } from "../constants";
 
 export const AccessDenied = () => (
-  <div className="h-screen flex flex-col items-center mt-20 sm:mt-32">
+  <div className="h-full flex flex-col items-center mt-20 sm:mt-32">
     <Helmet>
       <title>Access Denied | Nonicast</title>
     </Helmet>
