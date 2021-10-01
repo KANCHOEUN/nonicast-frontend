@@ -102,6 +102,7 @@ export const MyProfile = () => {
               isValid={true}
               loading={loading}
               text="Edit Profile"
+              styles=""
             />
           </Link>
           <SubmitButton
@@ -109,6 +110,7 @@ export const MyProfile = () => {
             loading={loading}
             onClick={logOut}
             text="Log Out"
+            styles=""
           />
         </div>
       </div>

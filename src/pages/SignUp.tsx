@@ -150,7 +150,12 @@ export const SignUp: React.FC = () => {
             </label>
           </div>
 
-          <SubmitButton isValid={isValid} loading={loading} text="Sign Up" />
+          <SubmitButton
+            isValid={isValid}
+            loading={loading}
+            text="Sign Up"
+            styles=""
+          />
           {createAccountResult?.createAccount.error && (
             <FormError errorMessage={createAccountResult.createAccount.error} />
           )}

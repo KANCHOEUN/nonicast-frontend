@@ -4,6 +4,7 @@ interface ISubmitButtonProps {
   isValid: boolean;
   loading: boolean;
   text: string;
+  styles: string;
   onClick?: () => void;
 }
 
@@ -11,6 +12,7 @@ export const SubmitButton: React.FC<ISubmitButtonProps> = ({
   isValid,
   loading,
   text,
+  styles,
   onClick,
 }) => (
   <button
@@ -19,7 +21,7 @@ export const SubmitButton: React.FC<ISubmitButtonProps> = ({
       isValid && !loading
         ? "bg-green-400 hover:bg-green-500 hover:bg-opacity-90"
         : "bg-gray-200 pointer-events-none"
-    }`}
+    } ${styles}`}
     disabled={loading ? true : false}
   >
     {loading ? "Loading..." : text}

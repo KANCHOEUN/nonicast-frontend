@@ -46,6 +46,11 @@ export interface CreatePodcastInput {
   description: string;
 }
 
+export interface CreateReviewInput {
+  content: string;
+  podcastId: number;
+}
+
 export interface LoginInput {
   email: string;
   password: string;

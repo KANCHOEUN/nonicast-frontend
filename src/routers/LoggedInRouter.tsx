@@ -26,7 +26,7 @@ const clientRoutes = [
     component: <Feeds />,
   },
   {
-    path: "/",
+    path: "/podcast/:id",
     component: <Podcast />,
   },
 ];

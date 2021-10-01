@@ -177,7 +177,12 @@ export const EditPodcast: React.FC = () => {
             <FormError errorMessage={errors.description?.message} />
           )}
           <div className="w-2/5 self-end">
-            <SubmitButton isValid={isValid} loading={loading} text="Save" />
+            <SubmitButton
+              isValid={isValid}
+              loading={loading}
+              text="Save"
+              styles=""
+            />
             {editPodcastResult?.updatePodcast.error && (
               <FormError errorMessage={editPodcastResult.updatePodcast.error} />
             )}

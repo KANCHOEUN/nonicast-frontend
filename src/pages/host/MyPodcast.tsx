@@ -9,6 +9,7 @@ import { Button } from "../../components/Button";
 import { EpisodeItem } from "../../components/EpisodeItem";
 import { defaultCoverImg, notFoundImg } from "../../constants";
 import { GetPodcastQuery } from "../../__generated__/GetPodcastQuery";
+import { UserRole } from "../../__generated__/globalTypes";
 
 export const GET_PODCAST_QUERY = gql`
   query GetPodcastQuery($id: Float!) {
@@ -26,6 +27,7 @@ export const GET_PODCAST_QUERY = gql`
         rating
         owner {
           id
+          role
         }
         episodes {
           id
@@ -33,6 +35,13 @@ export const GET_PODCAST_QUERY = gql`
           updatedAt
           title
           fileUrl
+        }
+        reviews {
+          creator {
+            email
+          }
+          content
+          createdAt
         }
       }
     }
@@ -161,7 +170,7 @@ export const MyPodcast: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="w-full mt-5 px-6 py-4">
+        <div className="w-full mt-5 pl-6 pr-4 py-4">
           {/* Episodes */}
           <div className="flex justify-between">
             <h1 className="text-xl font-semibold self-center">Episodes</h1>
@@ -191,6 +200,7 @@ export const MyPodcast: React.FC = () => {
               {data?.getPodcast.podcast?.episodes.map(
                 ({ id, title, fileUrl, createdAt, updatedAt }, idx) => (
                   <EpisodeItem
+                    role={data.getPodcast.podcast?.owner.role || UserRole.Host}
                     key={idx}
                     podcastId={+params.id}
                     episodeId={id}

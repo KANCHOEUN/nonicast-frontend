@@ -125,7 +125,12 @@ export const EditEpisode: React.FC = () => {
           )}
 
           <div className="w-2/5 self-end">
-            <SubmitButton isValid={isValid} loading={uploading} text="Save" />
+            <SubmitButton
+              isValid={isValid}
+              loading={uploading}
+              text="Save"
+              styles=""
+            />
             {editEpisodeResult?.createEpisode.error && (
               <FormError errorMessage={editEpisodeResult.createEpisode.error} />
             )}

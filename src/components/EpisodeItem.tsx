@@ -1,8 +1,10 @@
-import { PencilAltIcon, TrashIcon } from "@heroicons/react/solid";
+import { PencilAltIcon, PlayIcon, TrashIcon } from "@heroicons/react/solid";
 import React from "react";
 import { Link } from "react-router-dom";
+import { UserRole } from "../__generated__/globalTypes";
 
 interface IEpisodeItemProps {
+  role: UserRole;
   podcastId: number;
   episodeId: number;
   title: string;
@@ -12,6 +14,7 @@ interface IEpisodeItemProps {
 }
 
 export const EpisodeItem: React.FC<IEpisodeItemProps> = ({
+  role,
   podcastId,
   episodeId,
   title,
@@ -19,7 +22,9 @@ export const EpisodeItem: React.FC<IEpisodeItemProps> = ({
   createdAt,
   updatedAt,
 }) => {
-  const deleteHandler = () => console.log("delete");
+  const onClickPlayBtn = () => console.log("Play");
+  const deleteHandler = () => console.log("Delete");
+
   return (
     <div className="w-full pt-1 pb-3 cursor-pointer justify-between px-3 border-b border-gray-200 hover:bg-gray-100 hover:bg-opacity-50 transition duration-500">
       <div className="my-2">
@@ -36,13 +41,22 @@ export const EpisodeItem: React.FC<IEpisodeItemProps> = ({
       <div className="flex justify-between">
         <span>{title}</span>&nbsp;&nbsp;
         <div className="flex space-x-3">
-          <Link to={`/podcast/${podcastId}/episode/${episodeId}/edit`}>
-            <PencilAltIcon className="w-6 rounded-full hover:bg-gray-300 hover:bg-opacity-60" />
-          </Link>
-          <TrashIcon
-            onClick={deleteHandler}
+          <PlayIcon
+            onClick={onClickPlayBtn}
             className="w-6 rounded-full hover:bg-gray-300 hover:bg-opacity-60"
           />
+          {role === UserRole.Host && (
+            <>
+              {" "}
+              <Link to={`/podcast/${podcastId}/episode/${episodeId}/edit`}>
+                <PencilAltIcon className="w-6 rounded-full hover:bg-gray-300 hover:bg-opacity-60" />
+              </Link>
+              <TrashIcon
+                onClick={deleteHandler}
+                className="w-6 rounded-full hover:bg-gray-300 hover:bg-opacity-60"
+              />
+            </>
+          )}
         </div>
       </div>
     </div>

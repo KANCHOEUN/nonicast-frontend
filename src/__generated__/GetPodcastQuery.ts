@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { PodcastCategory } from "./globalTypes";
+import { PodcastCategory, UserRole } from "./globalTypes";
 
 // ====================================================
 // GraphQL query operation: GetPodcastQuery
@@ -12,6 +12,7 @@ import { PodcastCategory } from "./globalTypes";
 export interface GetPodcastQuery_getPodcast_podcast_owner {
   __typename: "User";
   id: number;
+  role: UserRole;
 }
 
 export interface GetPodcastQuery_getPodcast_podcast_episodes {
@@ -21,6 +22,18 @@ export interface GetPodcastQuery_getPodcast_podcast_episodes {
   updatedAt: any;
   title: string;
   fileUrl: string;
+}
+
+export interface GetPodcastQuery_getPodcast_podcast_reviews_creator {
+  __typename: "User";
+  email: string;
+}
+
+export interface GetPodcastQuery_getPodcast_podcast_reviews {
+  __typename: "Review";
+  creator: GetPodcastQuery_getPodcast_podcast_reviews_creator;
+  content: string;
+  createdAt: any;
 }
 
 export interface GetPodcastQuery_getPodcast_podcast {
@@ -35,6 +48,7 @@ export interface GetPodcastQuery_getPodcast_podcast {
   rating: number | null;
   owner: GetPodcastQuery_getPodcast_podcast_owner;
   episodes: GetPodcastQuery_getPodcast_podcast_episodes[];
+  reviews: GetPodcastQuery_getPodcast_podcast_reviews[];
 }
 
 export interface GetPodcastQuery_getPodcast {

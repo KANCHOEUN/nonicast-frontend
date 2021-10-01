@@ -122,7 +122,12 @@ export const Login: React.FC = () => {
             <FormError errorMessage={"Password must be more than 8 chars"} />
           )}
           {/* Login Button */}
-          <SubmitButton isValid={isValid} loading={loading} text="Login" />
+          <SubmitButton
+            isValid={isValid}
+            loading={loading}
+            text="Login"
+            styles=""
+          />
           {loginResults?.login.error && (
             <FormError errorMessage={loginResults.login.error} />
           )}{" "}

@@ -174,7 +174,12 @@ export const AddPodcast: React.FC = () => {
             <FormError errorMessage={errors.description?.message} />
           )}
           <div className="w-2/5 self-end">
-            <SubmitButton isValid={isValid} loading={loading} text="Create" />
+            <SubmitButton
+              isValid={isValid}
+              loading={loading}
+              text="Create"
+              styles=""
+            />
             {createPodcastResult?.createPodcast.error && (
               <FormError
                 errorMessage={createPodcastResult.createPodcast.error}

@@ -70,7 +70,7 @@ export const EditProfile: React.FC = () => {
   return (
     <div className="flex flex-col items-center mt-7 md:mt-24">
       <Helmet>
-        <title>Login | Noicast</title>
+        <title>Edit Profile | Noicast</title>
       </Helmet>
       <div className="w-full max-w-screen-sm flex flex-col items-center px-6 md:shadow md:px-20 md:py-16 md:rounded-xl">
         <h1 className="text-3xl font-bold mb-4 self-start">Login</h1>
@@ -128,7 +128,12 @@ export const EditProfile: React.FC = () => {
             <FormError errorMessage={"Password must be more than 8 chars"} />
           )}
           {/* Save Button */}
-          <SubmitButton isValid={isValid} loading={loading} text="Save" />
+          <SubmitButton
+            isValid={isValid}
+            loading={loading}
+            text="Save"
+            styles=""
+          />
           {editProfileResults?.updateProfile.error && (
             <FormError errorMessage={editProfileResults.updateProfile.error} />
           )}{" "}

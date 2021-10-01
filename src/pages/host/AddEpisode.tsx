@@ -119,7 +119,12 @@ export const AddEpisode: React.FC = () => {
           )}
 
           <div className="w-2/5 self-end">
-            <SubmitButton isValid={isValid} loading={uploading} text="Create" />
+            <SubmitButton
+              isValid={isValid}
+              loading={uploading}
+              text="Create"
+              styles=""
+            />
             {createEpisodeResult?.createEpisode.error && (
               <FormError
                 errorMessage={createEpisodeResult.createEpisode.error}

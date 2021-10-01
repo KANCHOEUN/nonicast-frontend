@@ -31,7 +31,7 @@ export const PodcastItem: React.FC<IPodcastItemProps> = ({
 
   return (
     <div className="my-6 mx-5 bg-white rounded-xl shadow-md overflow-hidden">
-      <Link to={`/${id}`}>
+      <Link to={`/podcast/${id}`}>
         <div className="sm:flex">
           {/* Img */}
           <div className="flex-shrink-0">
