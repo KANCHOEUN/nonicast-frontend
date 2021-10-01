@@ -30,7 +30,7 @@ export const PodcastItem: React.FC<IPodcastItemProps> = ({
   }
 
   return (
-    <div className="my-6 mx-10 bg-white rounded-xl shadow-md overflow-hidden">
+    <div className="my-6 mx-5 bg-white rounded-xl shadow-md overflow-hidden">
       <Link to={`/${id}`}>
         <div className="sm:flex">
           {/* Img */}

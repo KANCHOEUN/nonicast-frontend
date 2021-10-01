@@ -20,7 +20,7 @@ export interface GetPodcastQuery_getPodcast_podcast_episodes {
   createdAt: any;
   updatedAt: any;
   title: string;
-  category: PodcastCategory;
+  fileUrl: string;
 }
 
 export interface GetPodcastQuery_getPodcast_podcast {

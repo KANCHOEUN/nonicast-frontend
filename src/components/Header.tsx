@@ -1,17 +1,29 @@
 import { useReactiveVar } from "@apollo/client";
-import { FireIcon, UserCircleIcon } from "@heroicons/react/solid";
+import { FireIcon, SearchIcon, UserCircleIcon } from "@heroicons/react/solid";
 import { PencilIcon, HeartIcon } from "@heroicons/react/outline";
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import { isLoggedInVar } from "../apollo";
 import { Button } from "./Button";
 import { useMe } from "../hooks/useMe";
 import { UserRole } from "../__generated__/globalTypes";
 
 export const Header: React.FC = () => {
+  const [query, setQuery] = useState("");
   const { pathname } = useLocation();
+  const history = useHistory();
   const isLoggedIn = useReactiveVar(isLoggedInVar);
   const { data } = useMe();
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      history.push(`/search?title=${query}`);
+    }
+  };
+
+  const handleClick = (e: React.MouseEvent<SVGSVGElement>) => {
+    history.push(`/search?title=${query}`);
+  };
 
   return (
     <header className="sticky z-20 w-full shadow-sm">
@@ -22,14 +34,27 @@ export const Header: React.FC = () => {
             <h1 className="text-2xl font-extrabold">Nonicast</h1>
           </Link>
         </span>
-        <div className="flex">
+        <div className="flex w-7/12 sm:w-5/12">
+          {/* Search Input */}
+          <div className="relative flex group w-full mr-4 border border-gray-300 outline-none transition-all duration-700 rounded-lg group-focus:border-gray-600 overflow-hidden">
+            <input
+              type="text"
+              onKeyDown={handleKeyDown}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className="w-11/12 pl-3 outline-none"
+            />
+            <SearchIcon
+              onClick={handleClick}
+              className="w-5 absolute top-1.5 right-2.5 text-gray-400 group-focus:text-black cursor-pointer"
+            />
+          </div>
           {/* SignIn Button */}
           {!isLoggedIn && pathname !== "/login" && pathname !== "/sign-up" && (
             <Link to="/login">
               <Button text="Sign in" />
             </Link>
           )}
-          {/* TODO: Search Input */}
           {isLoggedIn && (
             <div className="flex items-end space-x-4">
               {data?.me.role === UserRole.Listener && (

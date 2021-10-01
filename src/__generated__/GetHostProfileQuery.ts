@@ -6,10 +6,10 @@
 import { PodcastCategory } from "./globalTypes";
 
 // ====================================================
-// GraphQL query operation: GetProfileQuery
+// GraphQL query operation: GetHostProfileQuery
 // ====================================================
 
-export interface GetProfileQuery_getProfile_user_podcasts {
+export interface GetHostProfileQuery_getProfile_user_podcasts {
   __typename: "Podcast";
   id: number;
   title: string;
@@ -18,23 +18,23 @@ export interface GetProfileQuery_getProfile_user_podcasts {
   updatedAt: any;
 }
 
-export interface GetProfileQuery_getProfile_user {
+export interface GetHostProfileQuery_getProfile_user {
   __typename: "User";
   id: number;
-  podcasts: GetProfileQuery_getProfile_user_podcasts[];
+  podcasts: GetHostProfileQuery_getProfile_user_podcasts[];
 }
 
-export interface GetProfileQuery_getProfile {
+export interface GetHostProfileQuery_getProfile {
   __typename: "UserOutput";
   ok: boolean;
   error: string | null;
-  user: GetProfileQuery_getProfile_user | null;
+  user: GetHostProfileQuery_getProfile_user | null;
 }
 
-export interface GetProfileQuery {
-  getProfile: GetProfileQuery_getProfile;
+export interface GetHostProfileQuery {
+  getProfile: GetHostProfileQuery_getProfile;
 }
 
-export interface GetProfileQueryVariables {
+export interface GetHostProfileQueryVariables {
   userId: number;
 }

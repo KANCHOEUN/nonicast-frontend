@@ -3,7 +3,7 @@ import { ChevronRightIcon } from "@heroicons/react/outline";
 import gql from "graphql-tag";
 import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { useParams, useRouteMatch } from "react-router";
+import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/Button";
 import { defaultCoverImg, notFoundImg } from "../../constants";
@@ -31,7 +31,7 @@ export const GET_PODCAST_QUERY = gql`
           createdAt
           updatedAt
           title
-          category
+          fileUrl
         }
       }
     }
@@ -53,8 +53,6 @@ export const MyPodcast: React.FC = () => {
       },
     }
   );
-  const history = useRouteMatch();
-  console.log(history);
 
   const handleDeleteBtn = () => {
     console.log("delete");
@@ -170,6 +168,7 @@ export const MyPodcast: React.FC = () => {
               <Button text="Add" />
             </Link>
           </div>
+          {/* No Episode */}
           {data?.getPodcast.podcast?.episodes.length === 0 && (
             <>
               <h5 className="my-3 text-right text-gray-500">
@@ -185,6 +184,7 @@ export const MyPodcast: React.FC = () => {
               </div>
             </>
           )}
+          {/* Episode List */}
         </div>
       </div>
     </>

@@ -2,7 +2,6 @@ import { useQuery } from "@apollo/client";
 import { CursorClickIcon } from "@heroicons/react/solid";
 import gql from "graphql-tag";
 import React from "react";
-import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { PodcastItem } from "../../components/PodcastItem";
 import { bannerImgs } from "../../constants";
@@ -48,9 +47,6 @@ export const Home: React.FC = () => {
   return (
     <>
       <div className="block relative w-full h-60 bg-white mb-3 max-w-screen-xl mx-auto border border-l-0 border-r-0 border-t-0 sm:h-80">
-        <Helmet>
-          <title>Home | Nonicast</title>
-        </Helmet>
         <div className="hidden bg-white h-full relative z-0 justify-end sm:flex">
           <img src={bannerImg} className="h-full" alt="banner-right" />
         </div>
@@ -72,6 +68,8 @@ export const Home: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* TODO: Category Filter */}
 
       <div className="mt-7 max-w-screen-xl mx-auto">
         {data &&

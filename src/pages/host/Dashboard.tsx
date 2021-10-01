@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 import { Button } from "../../components/Button";
 import { notFoundImg } from "../../constants";
 import { useMe } from "../../hooks/useMe";
-import { GetProfileQuery } from "../../__generated__/GetProfileQuery";
+import { GetHostProfileQuery } from "../../__generated__/GetHostProfileQuery";
 
-const GET_PROFILE_QUERY = gql`
-  query GetProfileQuery($userId: Float!) {
+const GET_HOST_PROFILE_QUERY = gql`
+  query GetHostProfileQuery($userId: Float!) {
     getProfile(userId: $userId) {
       ok
       error
@@ -29,8 +29,8 @@ const GET_PROFILE_QUERY = gql`
 
 export const Dashboard = () => {
   const { data: meQueryResult } = useMe();
-  const { data, loading, error } = useQuery<GetProfileQuery>(
-    GET_PROFILE_QUERY,
+  const { data, loading, error } = useQuery<GetHostProfileQuery>(
+    GET_HOST_PROFILE_QUERY,
     {
       variables: { userId: meQueryResult?.me.id },
     }
@@ -65,7 +65,7 @@ export const Dashboard = () => {
               <img
                 src={notFoundImg}
                 alt="nothing"
-                className="block mb-2 w-3/4"
+                className="block mb-2 w-3/4 sm:w-2/4"
               />
               <span className="font-medium">There's Nothing</span>
             </div>

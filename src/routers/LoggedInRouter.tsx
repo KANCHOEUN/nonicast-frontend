@@ -4,11 +4,14 @@ import { Header } from "../components/Header";
 import { useMe } from "../hooks/useMe";
 import { Home } from "../pages/client/Home";
 import { MyProfile } from "../pages/client/MyProfile";
+import { Search } from "../pages/client/Search";
 import { AddEpisode } from "../pages/host/AddEpisode";
 import { AddPodcast } from "../pages/host/AddPodcast";
 import { Dashboard } from "../pages/host/Dashboard";
 import { EditPodcast } from "../pages/host/EditPodcast";
 import { MyPodcast } from "../pages/host/MyPodcast";
+import { Feeds } from "../pages/listener/Feeds";
+import { Podcast } from "../pages/listener/Podcast";
 import { NotFound } from "../pages/NotFound";
 import { UserRole } from "../__generated__/globalTypes";
 
@@ -16,6 +19,14 @@ const clientRoutes = [
   {
     path: "/",
     component: <Home />,
+  },
+  {
+    path: "/feeds",
+    component: <Feeds />,
+  },
+  {
+    path: "/",
+    component: <Podcast />,
   },
 ];
 
@@ -46,6 +57,10 @@ const commonRoutes = [
   {
     path: "/user/:id",
     component: <MyProfile />,
+  },
+  {
+    path: "/search",
+    component: <Search />,
   },
 ];
 

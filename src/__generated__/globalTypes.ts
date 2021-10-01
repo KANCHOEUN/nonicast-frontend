@@ -33,6 +33,12 @@ export interface CreateAccountInput {
   role: UserRole;
 }
 
+export interface CreateEpisodeInput {
+  title: string;
+  fileUrl: string;
+  podcastId: number;
+}
+
 export interface CreatePodcastInput {
   title: string;
   coverImg: string;
@@ -43,6 +49,10 @@ export interface CreatePodcastInput {
 export interface LoginInput {
   email: string;
   password: string;
+}
+
+export interface SearchPodcastInput {
+  query: string;
 }
 
 export interface UpdatePodcastInput {
