@@ -86,7 +86,7 @@ export const MyPodcast: React.FC = () => {
         >
           Podcasts
         </Link>
-        <ChevronRightIcon className="w-4 mx-2.5 font-normal self-center text-blakc opacity-30" />
+        <ChevronRightIcon className="w-4 mx-2.5 font-normal self-center text-black opacity-30" />
         <span className="font-meidum">{`${data?.getPodcast.podcast?.title}`}</span>
       </div>
       <div className="w-full px-5 pb-5  sm:mx-auto sm:space-x-6 flex flex-wrap justify-between sm:flex-nowrap sm:max-w-screen-xl">

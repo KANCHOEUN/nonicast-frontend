@@ -26,7 +26,7 @@ export const EpisodeItem: React.FC<IEpisodeItemProps> = ({
   const deleteHandler = () => console.log("Delete");
 
   return (
-    <div className="w-full pt-1 pb-3 cursor-pointer justify-between px-3 border-b border-gray-200 hover:bg-gray-100 hover:bg-opacity-50 transition duration-500">
+    <div className="w-full pt-1 pb-3 justify-between px-3 border-b border-gray-200">
       <div className="my-2">
         <span className="text-gray-500 text-opacity-70">
           {new Date(createdAt).toLocaleDateString()}
@@ -43,17 +43,17 @@ export const EpisodeItem: React.FC<IEpisodeItemProps> = ({
         <div className="flex space-x-3">
           <PlayIcon
             onClick={onClickPlayBtn}
-            className="w-6 rounded-full hover:bg-gray-300 hover:bg-opacity-60"
+            className="w-6 rounded-full hover:bg-gray-200 hover:bg-opacity-60"
           />
           {role === UserRole.Host && (
             <>
               {" "}
               <Link to={`/podcast/${podcastId}/episode/${episodeId}/edit`}>
-                <PencilAltIcon className="w-6 rounded-full hover:bg-gray-300 hover:bg-opacity-60" />
+                <PencilAltIcon className="w-6 rounded-full hover:bg-gray-200 hover:bg-opacity-60" />
               </Link>
               <TrashIcon
                 onClick={deleteHandler}
-                className="w-6 rounded-full hover:bg-gray-300 hover:bg-opacity-60"
+                className="w-6 rounded-full hover:bg-gray-200 hover:bg-opacity-60"
               />
             </>
           )}

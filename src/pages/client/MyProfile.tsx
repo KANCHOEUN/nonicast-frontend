@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { authTokenVar, client, isLoggedInVar } from "../../apollo";
+import { ReviewItem } from "../../components/ReviewItem";
 import { SubmitButton } from "../../components/SubmitButton";
 import { LOCALSTORAGE_TOKEN } from "../../constants";
 import {
@@ -144,7 +145,23 @@ export const MyProfile = () => {
             </button>
           </div>
           {tab && <div>{/* My subscriptions */}</div>}
-          {!tab && <div>{/* TODO: My reviews */}</div>}
+          {!tab && (
+            <div className="w-full mt-6 max-w-screen-xl px-6 md:px-8">
+              {/* My reviews */}
+              {data.getProfile.user.reviews.map(
+                ({ createdAt, content, podcast: { id, title } }, idx) => (
+                  <ReviewItem
+                    key={idx}
+                    creator={`[ ${title} ]`}
+                    createdAt={createdAt}
+                    content={content}
+                    clickable={true}
+                    onClick={() => history.push(`/podcast/${id}`)}
+                  />
+                )
+              )}
+            </div>
+          )}
         </>
       )}
     </div>
