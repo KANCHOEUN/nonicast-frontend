@@ -28,6 +28,7 @@ const CREATE_REVIEW_MUTATION = gql`
 `;
 
 export const Podcast: React.FC = () => {
+  const [url, setUrl] = useState("");
   const [subscribe, setSubscribe] = useState(false);
   const [text, setText] = useState("");
   const history = useHistory();
@@ -212,6 +213,12 @@ export const Podcast: React.FC = () => {
               </div>
             </>
           )}
+          {/* Audio Player */}
+          <audio
+            controls={url === "" ? false : true}
+            src={url}
+            className="mt-6 w-full"
+          ></audio>
           {/* Episode List */}
           {getPodcastResult?.getPodcast.podcast?.episodes && (
             <div className="w-full mt-4">
@@ -226,6 +233,7 @@ export const Podcast: React.FC = () => {
                     fileUrl={fileUrl}
                     createdAt={createdAt}
                     updatedAt={updatedAt}
+                    onClick={setUrl}
                   />
                 )
               )}

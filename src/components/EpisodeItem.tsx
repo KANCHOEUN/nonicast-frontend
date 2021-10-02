@@ -11,6 +11,7 @@ interface IEpisodeItemProps {
   fileUrl: string;
   createdAt: Date;
   updatedAt: Date;
+  onClick: (fileUrl: string) => void;
 }
 
 export const EpisodeItem: React.FC<IEpisodeItemProps> = ({
@@ -21,8 +22,11 @@ export const EpisodeItem: React.FC<IEpisodeItemProps> = ({
   fileUrl,
   createdAt,
   updatedAt,
+  onClick,
 }) => {
-  const onClickPlayBtn = () => console.log("Play");
+  const onClickPlayBtn = () => {
+    onClick(fileUrl);
+  };
   const deleteHandler = () => console.log("Delete");
 
   return (

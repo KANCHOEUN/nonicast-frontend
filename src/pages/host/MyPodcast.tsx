@@ -77,6 +77,7 @@ export interface IMyPodcastParams {
 
 export const MyPodcast: React.FC = () => {
   const [tab, setTab] = useState(true);
+  const [url, setUrl] = useState("");
   const [podOpen, setPodOpen] = useState(false);
   const [epiOpen, setEpiOpen] = useState(false);
   const history = useHistory();
@@ -292,12 +293,19 @@ export const MyPodcast: React.FC = () => {
               </div>
             </>
           )}
+          {/* Audio Player */}
+          <audio
+            controls={url === "" ? false : true}
+            src={url}
+            className="mt-6 w-full"
+          ></audio>
           {/* Episode List */}
           {getPodcastResult?.getPodcast.podcast?.episodes && (
             <div className="w-full mt-4">
               {getPodcastResult?.getPodcast.podcast?.episodes.map(
                 ({ id, title, fileUrl, createdAt, updatedAt }, idx) => (
                   <EpisodeItem
+                    onClick={setUrl}
                     role={
                       getPodcastResult.getPodcast.podcast?.owner.role ||
                       UserRole.Host
