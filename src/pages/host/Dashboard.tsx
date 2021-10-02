@@ -4,6 +4,7 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/Button";
+import { Loading } from "../../components/Loading";
 import { notFoundImg } from "../../constants";
 import { useMe } from "../../hooks/useMe";
 import { GetHostProfileQuery } from "../../__generated__/GetHostProfileQuery";
@@ -36,11 +37,7 @@ export const Dashboard = () => {
     }
   );
 
-  if (!data || loading || error) {
-    <div className="h-screen flex justify-center items-center">
-      <span className="font-medium text-xl tracking-wide">Loading...</span>
-    </div>;
-  }
+  if (!data || loading || error) return <Loading />;
 
   return (
     <div className="w-full h-full flex justify-center ">

@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Header } from "../components/Header";
+import { Loading } from "../components/Loading";
 import { useMe } from "../hooks/useMe";
 import { EditProfile } from "../pages/client/EditProfile";
 import { Home } from "../pages/client/Home";
@@ -77,13 +78,7 @@ const commonRoutes = [
 export const LoggedInRouter = () => {
   const { data, loading, error } = useMe();
 
-  if (!data || loading || error) {
-    return (
-      <div className="h-screen flex justify-center items-center">
-        <span className="font-medium text-xl tracking-wide">Loading...</span>
-      </div>
-    );
-  }
+  if (!data || loading || error) return <Loading />;
 
   return (
     <BrowserRouter>

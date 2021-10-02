@@ -19,6 +19,7 @@ import { UserRole } from "../../__generated__/globalTypes";
 import { TrashIcon } from "@heroicons/react/solid";
 import { GET_HOST_PROFILE_QUERY } from "./Dashboard";
 import { GetHostProfileQuery } from "../../__generated__/GetHostProfileQuery";
+import { Loading } from "../../components/Loading";
 
 export const GET_PODCAST_QUERY = gql`
   query GetPodcastQuery($id: Float!) {
@@ -54,7 +55,6 @@ export const GET_PODCAST_QUERY = gql`
         }
         subscribers {
           id
-          createdAt
           email
         }
       }
@@ -134,11 +134,7 @@ export const MyPodcast: React.FC = () => {
     });
   };
 
-  if (!getPodcastResult || loading || error) {
-    <div className="h-screen flex justify-center items-center">
-      <span className="font-medium text-xl tracking-wide">Loading...</span>
-    </div>;
-  }
+  if (!getPodcastResult || loading || error) return <Loading />;
 
   return (
     <>

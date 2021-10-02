@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet-async";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { Button } from "../../components/Button";
 import { EpisodeItem } from "../../components/EpisodeItem";
+import { Loading } from "../../components/Loading";
 import { ReviewItem } from "../../components/ReviewItem";
 import { SubmitButton } from "../../components/SubmitButton";
 import { defaultCoverImg, notFoundImg } from "../../constants";
@@ -16,11 +17,24 @@ import {
 } from "../../__generated__/CreateReviewMutation";
 import { GetPodcastQuery } from "../../__generated__/GetPodcastQuery";
 import { UserRole } from "../../__generated__/globalTypes";
+import {
+  ToggleSubscribeMutation,
+  ToggleSubscribeMutationVariables,
+} from "../../__generated__/ToggleSubscribeMutation";
 import { GET_PODCAST_QUERY, IMyPodcastParams } from "../host/MyPodcast";
 
 const CREATE_REVIEW_MUTATION = gql`
   mutation CreateReviewMutation($input: CreateReviewInput!) {
     createReview(input: $input) {
+      ok
+      error
+    }
+  }
+`;
+
+const TOGGLE_SUBSCRIBE_MUTATION = gql`
+  mutation ToggleSubscribeMutation($input: SubscribeInput!) {
+    toggleSubscribe(input: $input) {
       ok
       error
     }
@@ -35,16 +49,17 @@ export const Podcast: React.FC = () => {
   const { data: meResult } = useMe();
   const params = useParams<IMyPodcastParams>();
   const client = useApolloClient();
-  const { data: getPodcastResult, loading } = useQuery<GetPodcastQuery>(
-    GET_PODCAST_QUERY,
-    {
-      variables: {
-        id: +params.id,
-      },
-    }
-  );
+  const {
+    data: getPodcastResult,
+    loading,
+    error,
+  } = useQuery<GetPodcastQuery>(GET_PODCAST_QUERY, {
+    variables: {
+      id: +params.id,
+    },
+  });
 
-  const onCompleted = (data: CreateReviewMutation) => {
+  const onReviewCompleted = (data: CreateReviewMutation) => {
     if (data.createReview.ok) {
       client.writeFragment({
         id: `Podcast:${+params.id}`,
@@ -78,12 +93,77 @@ export const Podcast: React.FC = () => {
     setText("");
   };
 
+  const onSubscribeCompleted = (data: ToggleSubscribeMutation) => {
+    if (data.toggleSubscribe.ok) {
+      const queryResult = client.readQuery<GetPodcastQuery>({
+        query: GET_PODCAST_QUERY,
+      });
+      if (subscribe) {
+        const newSubscribers =
+          queryResult?.getPodcast.podcast?.subscribers.filter(
+            (sub) => sub.id !== meResult?.me.id
+          );
+        client.writeFragment({
+          id: `Podcast:${+params.id}`,
+          fragment: gql`
+            fragment myPodcast on Podcast {
+              subscribers
+            }
+          `,
+          data: {
+            subscribers: newSubscribers,
+          },
+        });
+      } else {
+        client.writeFragment({
+          id: `Podcast:${+params.id}`,
+          fragment: gql`
+            fragment myPodcast on Podcast {
+              subscribers {
+                __typename
+                id
+                email
+              }
+            }
+          `,
+          data: {
+            subscribers: [
+              {
+                __typename: "User",
+                id: meResult?.me.id,
+                email: meResult?.me.email,
+              },
+              ...(getPodcastResult?.getPodcast.podcast?.subscribers || []),
+            ],
+          },
+        });
+      }
+    }
+    setSubscribe(!subscribe);
+  };
+
   const [createReviewMutation, { loading: reviewLoading }] = useMutation<
     CreateReviewMutation,
     CreateReviewMutationVariables
-  >(CREATE_REVIEW_MUTATION, { onCompleted });
+  >(CREATE_REVIEW_MUTATION, { onCompleted: onReviewCompleted });
 
-  const handleSubscribeBtn = () => console.log("subscribe");
+  const [toggleSubscribeMutation, { loading: subscribeLoading }] = useMutation<
+    ToggleSubscribeMutation,
+    ToggleSubscribeMutationVariables
+  >(TOGGLE_SUBSCRIBE_MUTATION, {
+    onCompleted: onSubscribeCompleted,
+  });
+
+  const handleSubscribeBtn = () => {
+    toggleSubscribeMutation({
+      variables: {
+        input: {
+          id: +params.id,
+        },
+      },
+    });
+  };
+
   const handleReviewBtn = () => {
     createReviewMutation({
       variables: {
@@ -95,7 +175,20 @@ export const Podcast: React.FC = () => {
     });
   };
 
-  useEffect(() => {}, [subscribe]);
+  useEffect(() => {
+    if (
+      getPodcastResult &&
+      getPodcastResult.getPodcast.podcast?.subscribers.some(
+        (sub) => sub.id === meResult?.me.id
+      )
+    ) {
+      setSubscribe(true);
+    }
+  }, [getPodcastResult, meResult?.me.id]);
+
+  if (!getPodcastResult || loading || error) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -144,7 +237,8 @@ export const Podcast: React.FC = () => {
                 ).toLocaleDateString()}
               </h5>
               <h5 className="mb-1">
-                category :&nbsp;{getPodcastResult?.getPodcast.podcast?.category}
+                category :&nbsp;
+                {getPodcastResult?.getPodcast.podcast?.category}
               </h5>
               <h5 className="mb-1">
                 description :&nbsp;
@@ -152,8 +246,17 @@ export const Podcast: React.FC = () => {
               </h5>
               <div className="flex w-full justify-end min-w-max space-x-3">
                 {/* Subscribe Button */}
-                <span className="w-1/3">
-                  <Button text="Subscribe" onClick={handleSubscribeBtn} />
+                <span className="w-1/3 mt-2">
+                  <button
+                    onClick={handleSubscribeBtn}
+                    className={`w-full py-3 font-medium shadow text-base tracking-tight transition-colors duration-500 outline-none rounded-full ${
+                      subscribe
+                        ? "bg-gray-200 hover:bg-gray-300 hover:bg-opcaity-50"
+                        : "bg-white hover:bg-gray-100 hover:bg-opacity-50"
+                    }`}
+                  >
+                    {subscribe ? "Unsubscribe" : "Subscribe"}
+                  </button>
                 </span>
               </div>
             </div>

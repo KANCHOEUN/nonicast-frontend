@@ -39,7 +39,6 @@ export interface GetPodcastQuery_getPodcast_podcast_reviews {
 export interface GetPodcastQuery_getPodcast_podcast_subscribers {
   __typename: "User";
   id: number;
-  createdAt: any;
   email: string;
 }
 
