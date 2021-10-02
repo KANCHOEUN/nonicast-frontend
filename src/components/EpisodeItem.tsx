@@ -1,7 +1,22 @@
+import { useMutation } from "@apollo/client";
 import { PencilAltIcon, PlayIcon, TrashIcon } from "@heroicons/react/solid";
 import React from "react";
-import { Link } from "react-router-dom";
+import gql from "graphql-tag";
+import { Link, useHistory } from "react-router-dom";
 import { UserRole } from "../__generated__/globalTypes";
+import {
+  DeleteEpisodeMutation,
+  DeleteEpisodeMutationVariables,
+} from "../__generated__/DeleteEpisodeMutation";
+
+const DELETE_EPISODE_MUTATION = gql`
+  mutation DeleteEpisodeMutation($input: EpisodeInput!) {
+    deleteEpisode(input: $input) {
+      ok
+      error
+    }
+  }
+`;
 
 interface IEpisodeItemProps {
   role: UserRole;
@@ -24,10 +39,34 @@ export const EpisodeItem: React.FC<IEpisodeItemProps> = ({
   updatedAt,
   onClick,
 }) => {
+  const history = useHistory();
+  const onCompleted = () => {
+    history.push(window.location.pathname);
+    history.go(0);
+  };
+
+  const [deleteEpisodeMutation, { loading }] = useMutation<
+    DeleteEpisodeMutation,
+    DeleteEpisodeMutationVariables
+  >(DELETE_EPISODE_MUTATION, {
+    onCompleted,
+  });
+
   const onClickPlayBtn = () => {
     onClick(fileUrl);
   };
-  const deleteHandler = () => console.log("Delete");
+
+  const deleteHandler = () => {
+    if (loading) return;
+    deleteEpisodeMutation({
+      variables: {
+        input: {
+          podcastId,
+          episodeId,
+        },
+      },
+    });
+  };
 
   return (
     <div className="w-full pt-1 pb-3 justify-between px-3 border-b border-gray-200">

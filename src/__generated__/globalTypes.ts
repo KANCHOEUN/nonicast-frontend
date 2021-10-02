@@ -51,6 +51,11 @@ export interface CreateReviewInput {
   podcastId: number;
 }
 
+export interface EpisodeInput {
+  podcastId: number;
+  episodeId: number;
+}
+
 export interface LoginInput {
   email: string;
   password: string;
