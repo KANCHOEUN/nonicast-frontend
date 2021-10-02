@@ -74,7 +74,7 @@ export const EditPodcast: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col items-center mt-7 md:mt-24">
+    <div className="w-full h-full flex flex-col items-center my-7 md:mt-24">
       <Helmet>
         <title>Edit Podcast | Nonicast</title>
       </Helmet>
@@ -129,7 +129,7 @@ export const EditPodcast: React.FC = () => {
           <span className="mt-4 text-black opacity-60 mb-2 text-sm">
             Category
           </span>
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap rounded-full">
             {Object.values(PodcastCategory).map((category, idx) => (
               <React.Fragment key={idx}>
                 {" "}

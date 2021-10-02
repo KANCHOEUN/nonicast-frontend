@@ -78,7 +78,7 @@ export const AddEpisode: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col items-center mt-7 md:mt-24">
+    <div className="w-full h-full flex flex-col items-center my-7 md:mt-24">
       <Helmet>
         <title>Add Episode | Nonicast</title>
       </Helmet>

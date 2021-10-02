@@ -36,6 +36,13 @@ export interface GetPodcastQuery_getPodcast_podcast_reviews {
   createdAt: any;
 }
 
+export interface GetPodcastQuery_getPodcast_podcast_subscribers {
+  __typename: "User";
+  id: number;
+  createdAt: any;
+  email: string;
+}
+
 export interface GetPodcastQuery_getPodcast_podcast {
   __typename: "Podcast";
   id: number;
@@ -49,6 +56,7 @@ export interface GetPodcastQuery_getPodcast_podcast {
   owner: GetPodcastQuery_getPodcast_podcast_owner;
   episodes: GetPodcastQuery_getPodcast_podcast_episodes[];
   reviews: GetPodcastQuery_getPodcast_podcast_reviews[];
+  subscribers: GetPodcastQuery_getPodcast_podcast_subscribers[];
 }
 
 export interface GetPodcastQuery_getPodcast {

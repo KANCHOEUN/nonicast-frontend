@@ -44,6 +44,11 @@ export const GET_PODCAST_QUERY = gql`
           content
           createdAt
         }
+        subscribers {
+          id
+          createdAt
+          email
+        }
       }
     }
   }

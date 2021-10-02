@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useApolloClient, useMutation, useQuery } from "@apollo/client";
 import { ChevronRightIcon } from "@heroicons/react/solid";
 import gql from "graphql-tag";
 import React, { useEffect, useState } from "react";
@@ -33,14 +33,49 @@ export const Podcast: React.FC = () => {
   const history = useHistory();
   const { data: meResult } = useMe();
   const params = useParams<IMyPodcastParams>();
-  const { data, loading } = useQuery<GetPodcastQuery>(GET_PODCAST_QUERY, {
-    variables: {
-      id: +params.id,
-    },
-  });
+  const client = useApolloClient();
+  const { data: getPodcastResult, loading } = useQuery<GetPodcastQuery>(
+    GET_PODCAST_QUERY,
+    {
+      variables: {
+        id: +params.id,
+      },
+    }
+  );
 
-  const onCompleted = () => {
-    history.go(0);
+  const onCompleted = (data: CreateReviewMutation) => {
+    console.log("oncompleted" + data.createReview.ok);
+    if (data.createReview.ok) {
+      client.writeFragment({
+        id: `Podcast:${+params.id}`,
+        fragment: gql`
+          fragment myReview on Podcast {
+            reviews {
+              creator {
+                email
+              }
+              content
+              createdAt
+            }
+          }
+        `,
+        data: {
+          reviews: [
+            {
+              creator: {
+                email: meResult?.me.email,
+                __typename: "Review",
+              },
+              content: text,
+              createdAt: new Date(),
+              __typename: "Review",
+            },
+            ...(getPodcastResult?.getPodcast.podcast?.reviews || []),
+          ],
+        },
+      });
+    }
+    setText("");
   };
 
   const [createReviewMutation, { loading: reviewLoading }] = useMutation<
@@ -58,7 +93,6 @@ export const Podcast: React.FC = () => {
         },
       },
     });
-    setText("");
   };
 
   useEffect(() => {}, [subscribe]);
@@ -76,7 +110,7 @@ export const Podcast: React.FC = () => {
           Home
         </Link>
         <ChevronRightIcon className="w-4 mx-2.5 font-normal self-center text-black opacity-30" />
-        <span className="font-meidum">{`${data?.getPodcast.podcast?.title}`}</span>
+        <span className="font-meidum">{`${getPodcastResult?.getPodcast.podcast?.title}`}</span>
       </div>
       <div className="w-full px-5 pb-5  sm:mx-auto sm:space-x-6 flex flex-wrap justify-between sm:flex-nowrap sm:max-w-screen-xl">
         <div className="w-full mt-5">
@@ -84,7 +118,7 @@ export const Podcast: React.FC = () => {
             <div className="bg-gray-100 opacity-50 h-10 rounded-t-lg border-b border-gray-200" />
             <img
               src={
-                data?.getPodcast.podcast?.coverImg ||
+                getPodcastResult?.getPodcast.podcast?.coverImg ||
                 defaultCoverImg[
                   Math.ceil(Math.random() * defaultCoverImg.length)
                 ]
@@ -95,25 +129,26 @@ export const Podcast: React.FC = () => {
             <div className="p-6 mt-3">
               {/* Podcast Info */}
               <h1 className="text-lg font-semibold mb-2">
-                {data?.getPodcast.podcast?.title}
+                {getPodcastResult?.getPodcast.podcast?.title}
               </h1>
               <h5 className="mb-1">
                 created :&nbsp;
                 {new Date(
-                  data?.getPodcast.podcast?.createdAt
+                  getPodcastResult?.getPodcast.podcast?.createdAt
                 ).toLocaleDateString()}
                 &nbsp;&nbsp;
                 <span className="text-gray-400 text-opacity-80">|</span>
                 &nbsp;&nbsp;updated :&nbsp;
                 {new Date(
-                  data?.getPodcast.podcast?.updatedAt
+                  getPodcastResult?.getPodcast.podcast?.updatedAt
                 ).toLocaleDateString()}
               </h5>
               <h5 className="mb-1">
-                category :&nbsp;{data?.getPodcast.podcast?.category}
+                category :&nbsp;{getPodcastResult?.getPodcast.podcast?.category}
               </h5>
               <h5 className="mb-1">
-                description :&nbsp;{data?.getPodcast.podcast?.description}
+                description :&nbsp;
+                {getPodcastResult?.getPodcast.podcast?.description}
               </h5>
               <div className="flex w-full justify-end min-w-max space-x-3">
                 {/* Subscribe Button */}
@@ -146,8 +181,8 @@ export const Podcast: React.FC = () => {
                 />
               </div>
             </div>
-            {data?.getPodcast.podcast?.reviews &&
-              data.getPodcast.podcast.reviews.map(
+            {getPodcastResult?.getPodcast.podcast?.reviews &&
+              getPodcastResult.getPodcast.podcast.reviews.map(
                 ({ creator: { email }, createdAt, content }, idx) => (
                   <ReviewItem
                     key={idx}
@@ -166,7 +201,7 @@ export const Podcast: React.FC = () => {
             <h1 className="text-xl font-semibold self-center">Episodes</h1>
           </div>
           {/* No Episode */}
-          {data?.getPodcast.podcast?.episodes.length === 0 && (
+          {getPodcastResult?.getPodcast.podcast?.episodes.length === 0 && (
             <>
               <h5 className="my-3 text-right text-gray-500">
                 Click "Add" Button to create episode. &uarr; &nbsp;
@@ -182,9 +217,9 @@ export const Podcast: React.FC = () => {
             </>
           )}
           {/* Episode List */}
-          {data?.getPodcast.podcast?.episodes && (
+          {getPodcastResult?.getPodcast.podcast?.episodes && (
             <div className="w-full mt-4">
-              {data?.getPodcast.podcast?.episodes.map(
+              {getPodcastResult?.getPodcast.podcast?.episodes.map(
                 ({ id, title, fileUrl, createdAt, updatedAt }, idx) => (
                   <EpisodeItem
                     role={UserRole.Listener}
