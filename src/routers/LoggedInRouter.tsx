@@ -9,6 +9,7 @@ import { Search } from "../pages/client/Search";
 import { AddEpisode } from "../pages/host/AddEpisode";
 import { AddPodcast } from "../pages/host/AddPodcast";
 import { Dashboard } from "../pages/host/Dashboard";
+import { EditEpisode } from "../pages/host/EditEpisode";
 import { EditPodcast } from "../pages/host/EditPodcast";
 import { MyPodcast } from "../pages/host/MyPodcast";
 import { Feeds } from "../pages/listener/Feeds";
@@ -51,6 +52,10 @@ const hostRoutes = [
   {
     path: "/podcast/:id/episode/add",
     component: <AddEpisode />,
+  },
+  {
+    path: "/podcast/:podcastId/episode/:episodeId/edit",
+    component: <EditEpisode />,
   },
 ];
 
