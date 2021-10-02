@@ -60,10 +60,6 @@ export interface SearchPodcastInput {
   query: string;
 }
 
-export interface SubscribeInput {
-  id: number;
-}
-
 export interface UpdateEpisodeInput {
   podcastId: number;
   episodeId: number;

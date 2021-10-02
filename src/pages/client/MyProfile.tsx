@@ -74,7 +74,7 @@ export const MyProfile = () => {
   }
 
   return (
-    <div className="w-full mt-5 flex flex-col items-center justify-center max-x-screen">
+    <div className="w-full mt-5 mb-10 flex flex-col items-center justify-center max-x-screen">
       <Helmet>
         <title>Profile | Nonicast</title>
       </Helmet>

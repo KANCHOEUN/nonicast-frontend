@@ -44,7 +44,6 @@ export const Podcast: React.FC = () => {
   );
 
   const onCompleted = (data: CreateReviewMutation) => {
-    console.log("oncompleted" + data.createReview.ok);
     if (data.createReview.ok) {
       client.writeFragment({
         id: `Podcast:${+params.id}`,
@@ -203,9 +202,6 @@ export const Podcast: React.FC = () => {
           {/* No Episode */}
           {getPodcastResult?.getPodcast.podcast?.episodes.length === 0 && (
             <>
-              <h5 className="my-3 text-right text-gray-500">
-                Click "Add" Button to create episode. &uarr; &nbsp;
-              </h5>
               <div className="w-full h-full flex flex-col justify-center items-center">
                 <img
                   src={notFoundImg}

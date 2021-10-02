@@ -8,7 +8,7 @@ import { notFoundImg } from "../../constants";
 import { useMe } from "../../hooks/useMe";
 import { GetHostProfileQuery } from "../../__generated__/GetHostProfileQuery";
 
-const GET_HOST_PROFILE_QUERY = gql`
+export const GET_HOST_PROFILE_QUERY = gql`
   query GetHostProfileQuery($userId: Float!) {
     getProfile(userId: $userId) {
       ok
