@@ -13,7 +13,7 @@ import {
 } from "../../__generated__/GetProfileQuery";
 import { UserRole } from "../../__generated__/globalTypes";
 
-const GET_PROFILE_QUERY = gql`
+export const GET_PROFILE_QUERY = gql`
   query GetProfileQuery($userId: Float!) {
     getProfile(userId: $userId) {
       ok
@@ -26,6 +26,7 @@ const GET_PROFILE_QUERY = gql`
           id
           title
           category
+          coverImg
         }
         reviews {
           createdAt
@@ -144,7 +145,27 @@ export const MyProfile = () => {
               My Reviews
             </button>
           </div>
-          {tab && <div>{/* My subscriptions */}</div>}
+          {tab && (
+            <div className="w-full mt-6 max-w-screen-xl px-6 md:px-8">
+              {/* My subscriptions */}
+              {data.getProfile.user.subscriptions.map(
+                ({ id, title, category, coverImg }, idx) => (
+                  <div className="w-full max-h-max pt-2 pb-3 justify-between px-3 border-b border-gray-200 hover:bg-gray-100 hover:bg-opacity-50 transition duration-500 cursor-pointer">
+                    <Link key={idx} to={`/podcast/${id}`} className="flex">
+                      <div
+                        className="rounded-full bg-cover w-10 h-10 shadow mr-4 self-center"
+                        style={{ backgroundImage: `url(${coverImg})` }}
+                      />
+                      <div className="flex flex-col space-y-1">
+                        <span>{`[${category}]`}&nbsp;</span>
+                        <span>{title + " "}</span>
+                      </div>
+                    </Link>
+                  </div>
+                )
+              )}
+            </div>
+          )}
           {!tab && (
             <div className="w-full mt-6 max-w-screen-xl px-6 md:px-8">
               {/* My reviews */}

@@ -95,23 +95,24 @@ export const Podcast: React.FC = () => {
 
   const onSubscribeCompleted = (data: ToggleSubscribeMutation) => {
     if (data.toggleSubscribe.ok) {
-      const queryResult = client.readQuery<GetPodcastQuery>({
-        query: GET_PODCAST_QUERY,
-      });
       if (subscribe) {
         const newSubscribers =
-          queryResult?.getPodcast.podcast?.subscribers.filter(
+          getPodcastResult?.getPodcast.podcast?.subscribers.filter(
             (sub) => sub.id !== meResult?.me.id
           );
         client.writeFragment({
           id: `Podcast:${+params.id}`,
           fragment: gql`
             fragment myPodcast on Podcast {
-              subscribers
+              subscribers {
+                __typename
+                id
+                email
+              }
             }
           `,
           data: {
-            subscribers: newSubscribers,
+            subscribers: [...(newSubscribers || [])],
           },
         });
       } else {
@@ -155,6 +156,7 @@ export const Podcast: React.FC = () => {
   });
 
   const handleSubscribeBtn = () => {
+    if (subscribeLoading) return;
     toggleSubscribeMutation({
       variables: {
         input: {
@@ -165,6 +167,7 @@ export const Podcast: React.FC = () => {
   };
 
   const handleReviewBtn = () => {
+    if (reviewLoading) return;
     createReviewMutation({
       variables: {
         input: {

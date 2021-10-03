@@ -14,6 +14,7 @@ export interface GetProfileQuery_getProfile_user_subscriptions {
   id: number;
   title: string;
   category: PodcastCategory;
+  coverImg: string;
 }
 
 export interface GetProfileQuery_getProfile_user_reviews_podcast {
