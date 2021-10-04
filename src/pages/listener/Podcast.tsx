@@ -4,7 +4,6 @@ import gql from "graphql-tag";
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useParams, useHistory } from "react-router-dom";
-import { Button } from "../../components/Button";
 import { EpisodeItem } from "../../components/EpisodeItem";
 import { Loading } from "../../components/Loading";
 import { ReviewItem } from "../../components/ReviewItem";
@@ -320,11 +319,7 @@ export const Podcast: React.FC = () => {
             </>
           )}
           {/* Audio Player */}
-          <audio
-            controls={url === "" ? false : true}
-            src={url}
-            className="mt-6 w-full"
-          ></audio>
+          <audio controls src={url} className="mt-6 w-full"></audio>
           {/* Episode List */}
           {getPodcastResult?.getPodcast.podcast?.episodes && (
             <div className="w-full mt-4">

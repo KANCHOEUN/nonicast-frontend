@@ -290,11 +290,7 @@ export const MyPodcast: React.FC = () => {
             </>
           )}
           {/* Audio Player */}
-          <audio
-            controls={url === "" ? false : true}
-            src={url}
-            className="mt-6 w-full"
-          ></audio>
+          <audio controls src={url} className="mt-6 w-full"></audio>
           {/* Episode List */}
           {getPodcastResult?.getPodcast.podcast?.episodes && (
             <div className="w-full mt-4">
