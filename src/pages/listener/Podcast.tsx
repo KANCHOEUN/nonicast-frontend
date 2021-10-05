@@ -318,27 +318,29 @@ export const Podcast: React.FC = () => {
               </div>
             </>
           )}
-          {/* Audio Player */}
-          <audio controls src={url} className="mt-6 w-full"></audio>
           {/* Episode List */}
-          {getPodcastResult?.getPodcast.podcast?.episodes && (
-            <div className="w-full mt-4">
-              {getPodcastResult?.getPodcast.podcast?.episodes.map(
-                ({ id, title, fileUrl, createdAt, updatedAt }, idx) => (
-                  <EpisodeItem
-                    role={UserRole.Listener}
-                    key={idx}
-                    podcastId={+params.id}
-                    episodeId={id}
-                    title={title}
-                    fileUrl={fileUrl}
-                    createdAt={createdAt}
-                    updatedAt={updatedAt}
-                    onClick={setUrl}
-                  />
-                )
-              )}
-            </div>
+          {getPodcastResult?.getPodcast.podcast?.episodes.length !== 0 && (
+            <>
+              {/* Audio Player */}
+              <audio controls src={url} className="mt-6 w-full"></audio>
+              <div className="w-full mt-4">
+                {getPodcastResult?.getPodcast.podcast?.episodes.map(
+                  ({ id, title, fileUrl, createdAt, updatedAt }, idx) => (
+                    <EpisodeItem
+                      role={UserRole.Listener}
+                      key={idx}
+                      podcastId={+params.id}
+                      episodeId={id}
+                      title={title}
+                      fileUrl={fileUrl}
+                      createdAt={createdAt}
+                      updatedAt={updatedAt}
+                      onClick={setUrl}
+                    />
+                  )
+                )}
+              </div>
+            </>
           )}
         </div>
       </div>
